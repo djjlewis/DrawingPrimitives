@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -49,20 +50,59 @@ namespace DanielLewis.DrawingPrimitives.Core
             DrawVerticalLine(startX + length, startY, length, color);
         }
 
+        /// <summary>
+        /// Draws a square to the Bitmap object using a Raster-style scan algorithm
+        /// Certainly sub-optimal, but shows one technique to "check" each pixel
+        /// before it is renderd
+        /// </summary>
+        /// <param name="startX">The X position of the top corner of the square</param>
+        /// <param name="startY">The Y Position of the top corner of the square</param>
+        /// <param name="length">The length of the square in pixels</param>
+        /// <param name="color">The color of the square</param>
         public void DrawSquare(int startX, int startY, int length, Color color)
         {
-            var currentX = startX;
-            var currentY = startY;
-
-            for (int i = startX; i < length; i++)
+            for (int y = 0; y < Bitmap.Height; y++)
             {
-                Bitmap.SetPixel(startX + i, currentY, color);
-            }
+                for (int x = 0; x < Bitmap.Width; x++)
+                {
+                    // draws the top line
+                    if (x >= startX && x <= startX + length && y == startY)
+                    {
+                        Bitmap.SetPixel(x, y, color);
+                    }
 
-            for (int i = startX; i < length; i++)
-            {
-                Bitmap.SetPixel(startX, startY + i, color);
+                    // draws the left line
+                    if (x == startX && y >= startY && y <= startY + length)
+                    {
+                        Bitmap.SetPixel(x, y, color);
+                    }
+
+                    // draws the right line
+                    if (x == startX + length && y >= startY && y <= startY + length)
+                    {
+                        Bitmap.SetPixel(x, y, color);
+                    }
+
+                    // draws the bottom line
+                    if (x >= startX && x <= startX + length && y == startY + length)
+                    {
+                        Bitmap.SetPixel(x, y, color);
+                    }
+                }
             }
+        }
+
+        public void IteratePixels()
+        {
+            Debug.WriteLine("Starting...");
+            for (int y = 0; y < Bitmap.Height; y++)
+            {
+                for (int x = 0; x < Bitmap.Width; x++)
+                {
+                    Debug.WriteLine("At X = {0}, Y = {1}", x, y);
+                }
+            }
+            Debug.WriteLine("Finished.");
         }
     }
 }
