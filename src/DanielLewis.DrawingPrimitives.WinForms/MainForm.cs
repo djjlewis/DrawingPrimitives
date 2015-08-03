@@ -29,7 +29,7 @@ namespace DrawingPrimitives
 
             _drawer = new PrimitiveDrawer(drawingArea);
 
-            _drawer.DrawSquareWithLines();
+            _drawer.DrawSquareWithLines(10,10,120, Color.Red);
         }
 
         protected override void OnPaint(PaintEventArgs e)

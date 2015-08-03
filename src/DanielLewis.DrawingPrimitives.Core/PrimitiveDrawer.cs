@@ -18,44 +18,50 @@ namespace DanielLewis.DrawingPrimitives.Core
             Bitmap = drawingArea;
         }
 
-        public void DrawVerticalLine(int startX, int startY, int length, Color colour)
+        public void DrawVerticalLine(int startX, int startY, int length, Color color)
         {
             for (int i = 0; i < length; i++)
             {
-                Bitmap.SetPixel(startX, startY + i, colour);
+                Bitmap.SetPixel(startX, startY + i, color);
             }
         }
 
-        public void DrawHorizontalLine(int startX, int startY, int length, Color colour)
+        public void DrawHorizontalLine(int startX, int startY, int length, Color color)
         {
             for (int i = 0; i < length; i++)
             {
-                Bitmap.SetPixel(startX + i, startY, colour);
+                Bitmap.SetPixel(startX + i, startY, color);
             }
         }
 
-        public void DrawSquareWithLines()
+        public void DrawSquareWithLines(int startX, int startY, int length, Color color)
         {
-            var colour = Color.Purple;
-            DrawHorizontalLine(10, 10, 100, colour);
-            DrawHorizontalLine(10, 110, 100, colour);
-            DrawVerticalLine(110, 10, 100, colour);
-            DrawVerticalLine(10, 10, 100, colour);
+            // Draw the top line of the square
+            DrawHorizontalLine(startX, startY, length, color);
+
+            // Draw the right  line of the square
+            DrawVerticalLine(startX, startY, length, color);
+
+            // Draw the bottom line of the square
+            DrawHorizontalLine(startX, startY + length, length, color);
+
+            // Draw the Left line of the square
+            DrawVerticalLine(startX + length, startY, length, color);
         }
 
-        public void DrawSquare(int startX, int startY, int length, Color colour)
+        public void DrawSquare(int startX, int startY, int length, Color color)
         {
             var currentX = startX;
             var currentY = startY;
 
             for (int i = startX; i < length; i++)
             {
-                Bitmap.SetPixel(startX + i, currentY, colour);
+                Bitmap.SetPixel(startX + i, currentY, color);
             }
 
             for (int i = startX; i < length; i++)
             {
-                Bitmap.SetPixel(startX, startY + i, colour);
+                Bitmap.SetPixel(startX, startY + i, color);
             }
         }
     }
